@@ -2,8 +2,14 @@
     <th:block th:utext="${errorMessage}"></th:block>
 </ul>
 <form action="doWrite" method="POST">
-    <input type="text" name="title" placeholder="제목" autofocus th:value="${form.title}"><br>
-    <textarea name="content" placeholder="내용" th:text="${form.content}"></textarea><br>
+    <div>
+        <label for="title">제목</label><br>
+        <input type="text" name="title" id="title" placeholder="제목" autofocus th:value="${form.title}"><br>
+    </div>
+    <div>
+        <label for="content">내용</label><br>
+        <textarea name="content" id="content" placeholder="내용" th:text="${form.content}"></textarea><br>
+    </div>
     <button type="submit">작성</button>
 </form>
 
