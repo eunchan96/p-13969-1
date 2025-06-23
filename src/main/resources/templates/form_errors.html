@@ -1,0 +1,17 @@
+<th:block th:fragment="formErrorsFragment">
+    <ul th:if="${#fields.hasAnyErrors()}">
+        <li th:each="error : ${#fields.allErrors().stream().sorted()}"
+            th:with="errStrs=${error.split('-', 3)}, errFieldName=${errStrs[1]}, errMsg=${errStrs[2]}"
+            th:text="${errMsg}" th:data-error-field-name="${errFieldName}" style="color:red;"></li>
+    </ul>
+
+    <script>
+        const forms = document.querySelectorAll("form");
+        const lastForm = forms[forms.length - 1];
+        const errorFieldName = lastForm.querySelector('ul > li')?.dataset?.errorFieldName || '';
+
+        if(errorFieldName.length > 0){
+            setTimeout(() => lastForm[errorFieldName].focus());
+        }
+    </script>
+</th:block>
