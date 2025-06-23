@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.stream.Collectors;
@@ -23,7 +24,7 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/posts/write")
-    public String showWrite(WriteForm form) {
+    public String showWrite(@ModelAttribute("form") WriteForm form) {
         return "post/post/write";
     }
 
@@ -42,7 +43,7 @@ public class PostController {
 
     @PostMapping("/posts/doWrite")
     @Transactional
-    public String doWrite(@Valid WriteForm form, BindingResult bindingResult, Model model) {
+    public String doWrite(@ModelAttribute("form") @Valid WriteForm form, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             String errorMessage = bindingResult
                     .getFieldErrors()
