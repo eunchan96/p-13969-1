@@ -1,4 +1,6 @@
-<ul style="color:red;" th:utext="${errorMessage}"></ul>
+<ul style="color:red;">
+    <th:block th:utext="${errorMessage}"></th:block>
+</ul>
 <form action="doWrite" method="POST">
     <input type="text" name="title" placeholder="제목" autofocus th:value="${form.title}"><br>
     <textarea name="content" placeholder="내용" th:text="${form.content}"></textarea><br>
