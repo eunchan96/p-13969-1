@@ -4,11 +4,11 @@
 <form action="doWrite" method="POST" th:object="${form}">
     <div>
         <label for="title">제목</label><br>
-        <input type="text" name="title" id="title" placeholder="제목" autofocus th:value="*{title}"><br>
+        <input type="text" placeholder="제목" autofocus th:field="*{title}"><br>
     </div>
     <div>
         <label for="content">내용</label><br>
-        <textarea name="content" id="content" placeholder="내용" th:text="*{content}"></textarea><br>
+        <textarea placeholder="내용" th:field="*{content}"></textarea><br>
     </div>
     <button type="submit">작성</button>
 </form>
