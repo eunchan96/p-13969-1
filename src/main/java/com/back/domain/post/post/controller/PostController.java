@@ -2,9 +2,12 @@ package com.back.domain.post.post.controller;
 
 import com.back.domain.post.post.entity.Post;
 import com.back.domain.post.post.service.PostService;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
+@Validated
 public class PostController {
     private final PostService postService;
 
@@ -51,14 +55,10 @@ public class PostController {
     @PostMapping("/posts/doWrite")
     @ResponseBody
     @Transactional
-    public String doWrite(@RequestParam(defaultValue = "") String title, @RequestParam(defaultValue = "") String content) {
-        if (title.isBlank()) return getWriteFormHtml("title", "제목을 입력해주세요.", title, content);
-        if (title.length() < 2) return getWriteFormHtml("title", "제목은 2글자 이상이어야 합니다.", title, content);
-        if (title.length() > 20) return getWriteFormHtml("title", "제목은 최대 20글자까지 가능합니다.", title, content);
-        if (content.isBlank()) return getWriteFormHtml("content", "내용을 입력해주세요.", title, content);
-        if (content.length() < 2) return getWriteFormHtml("content", "내용은 2글자 이상이어야 합니다.", title, content);
-        if (content.length() > 100) return getWriteFormHtml("content", "내용은 최대 100글자까지 가능합니다.", title, content);
-
+    public String doWrite(
+            @NotBlank @Size(min = 2, max = 20) @RequestParam(defaultValue = "") String title,
+            @NotBlank @Size(min = 2, max = 20) @RequestParam(defaultValue = "") String content
+    ) {
         Post post = postService.write(title, content);
 
         return "%d번 글이 작성되었습니다.".formatted(post.getId());
