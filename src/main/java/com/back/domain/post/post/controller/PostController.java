@@ -31,8 +31,22 @@ public class PostController {
     @ResponseBody
     @Transactional
     public String doWrite(@RequestParam(defaultValue = "") String title, @RequestParam(defaultValue = "") String content) {
-        if (title.isBlank()) return "제목을 입력해주세요.";
-        if (content.isBlank()) return "내용을 입력해주세요.";
+        if (title.isBlank()) return """
+                <div style="color:red;">제목을 입력해주세요.</div>
+                <form action="doWrite" target="_blank" method="POST">
+                    <input type="text" name="title" placeholder="제목" value="안녕"><br>
+                    <textarea name="content" placeholder="내용">반가워.</textarea><br>
+                    <button type="submit">작성</button>
+                </form>
+                """;
+        if (content.isBlank()) return """
+                <div style="color:red;">내용을 입력해주세요.</div>
+                <form action="doWrite" target="_blank" method="POST">
+                    <input type="text" name="title" placeholder="제목" value="안녕"><br>
+                    <textarea name="content" placeholder="내용">반가워.</textarea><br>
+                    <button type="submit">작성</button>
+                </form>
+                """;
 
         Post post = postService.write(title, content);
 
