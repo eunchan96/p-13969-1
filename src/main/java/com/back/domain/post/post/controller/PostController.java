@@ -53,7 +53,11 @@ public class PostController {
     @Transactional
     public String doWrite(@RequestParam(defaultValue = "") String title, @RequestParam(defaultValue = "") String content) {
         if (title.isBlank()) return getWriteFormHtml("title", "제목을 입력해주세요.", title, content);
+        if (title.length() < 2) return getWriteFormHtml("title", "제목은 2글자 이상이어야 합니다.", title, content);
+        if (title.length() > 20) return getWriteFormHtml("title", "제목은 최대 20글자까지 가능합니다.", title, content);
         if (content.isBlank()) return getWriteFormHtml("content", "내용을 입력해주세요.", title, content);
+        if (content.length() < 2) return getWriteFormHtml("content", "내용은 2글자 이상이어야 합니다.", title, content);
+        if (content.length() > 100) return getWriteFormHtml("content", "내용은 최대 100글자까지 가능합니다.", title, content);
 
         Post post = postService.write(title, content);
 
