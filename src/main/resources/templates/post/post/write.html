@@ -1,7 +1,7 @@
-<ul style="color:red;">
-    <th:block th:utext="${errorMessage}"></th:block>
-</ul>
 <form action="doWrite" method="POST" th:object="${form}">
+    <ul th:if="${#fields.hasAnyErrors()}">
+        <li th:each="error : ${#fields.allErrors()}" th:text="${error}" style="color:red;"></li>
+    </ul>
     <div>
         <label for="title">제목</label><br>
         <input type="text" placeholder="제목" autofocus th:field="*{title}"><br>

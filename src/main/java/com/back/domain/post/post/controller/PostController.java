@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.stream.Collectors;
-
 @Controller
 @RequiredArgsConstructor
 public class PostController {
@@ -45,15 +43,6 @@ public class PostController {
     @Transactional
     public String doWrite(@ModelAttribute("form") @Valid WriteForm form, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            String errorMessage = bindingResult
-                    .getFieldErrors()
-                    .stream()
-                    .map(fieldError -> (fieldError.getField() + "-" + fieldError.getDefaultMessage()).split("-"))
-                    .map(field -> "<!--%s--><li data-error-field-name=\"%s\">%s</li>".formatted(field[1], field[0], field[2]))
-                    .sorted()
-                    .collect(Collectors.joining("\n"));
-
-            model.addAttribute("errorMessage", errorMessage);
             return "post/post/write";
         }
         Post post = postService.write(form.getTitle(), form.getContent());
