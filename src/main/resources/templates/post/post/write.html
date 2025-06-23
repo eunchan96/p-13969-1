@@ -1,0 +1,19 @@
+<ul style="color:red;" th:utext="${errorMessage}"></ul>
+<form action="doWrite" method="POST">
+    <input type="text" name="title" placeholder="제목" autofocus th:value="${writeForm?.title}"><br>
+    <textarea name="content" placeholder="내용" th:text="${writeForm?.content}"></textarea><br>
+    <button type="submit">작성</button>
+</form>
+
+<script>
+    // 현재까지 나온 모든 폼 검색
+    const forms = document.querySelectorAll("form");
+    // 그 중에서 가장 마지막에 나온 폼을 선택
+    const lastForm = forms[forms.length - 1];
+    // li 태그에서 data-error-field-name 속성값 가져오기
+    const errorFieldName = lastForm.previousElementSibling?.querySelector('li')?.dataset?.errorFieldName || '';
+    if(errorFieldName.length > 0) {
+        // 해당 폼의 에러 필드에 포커스
+        lastForm[errorFieldName].focus();
+    }
+</script>
