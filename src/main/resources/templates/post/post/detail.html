@@ -9,6 +9,39 @@
 
 <hr>
 
+<h3>댓글 작성</h3>
+<script>
+    function PostComment__submitWriteForm(form) {
+        form.content.value = form.content.value.trim();
+
+        if (form.content.value.length === 0) {
+            alert("댓글 내용을 입력해주세요.");
+            form.content.focus();
+            return;
+        }
+
+        if (form.content.value.length < 2) {
+            alert("댓글 내용을 2자 이상 입력해주세요.");
+            form.content.focus();
+            return;
+        }
+
+        form.submit();
+    }
+</script>
+
+<form th:action="@{/posts/{id}/comments/write(id=${post.id})}" method="post" onsubmit="PostComment__submitWriteForm(this); return false;">
+    <div>
+        <label for="content">내용</label><br>
+        <textarea id="content" name="content" rows="5" cols="50"></textarea>
+    </div>
+    <div>
+        <button type="submit">작성</button>
+    </div>
+</form>
+
+<hr>
+
 <h3>댓글</h3>
 <ul>
     <li th:each="postComment : ${post.comments.reversed}">
