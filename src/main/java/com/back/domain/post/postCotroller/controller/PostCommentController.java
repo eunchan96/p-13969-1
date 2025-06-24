@@ -6,8 +6,6 @@ import com.back.domain.post.postComment.entity.PostComment;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,20 +19,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class PostCommentController {
     private final PostService postService;
 
-    @AllArgsConstructor
-    @Getter
-    public static class WriteForm {
-        @NotBlank
-        @Size(min = 2, max = 100)
-        private String content;
-    }
+    record WriteForm (
+            @NotBlank
+            @Size(min = 2, max = 100)
+            String content
+    ){}
 
     @PostMapping("/posts/{postId}/comments/write")
     @Transactional
     public String write(@PathVariable int postId, @Valid WriteForm form){
         Post post = postService.findById(postId).get();
 
-        postService.writeComment(post, form.getContent());
+        postService.writeComment(post, form.content);
 
         return "redirect:/posts/" + postId;
     }
@@ -51,13 +47,11 @@ public class PostCommentController {
     }
 
 
-    @AllArgsConstructor
-    @Getter
-    public static class ModifyForm {
-        @NotBlank
-        @Size(min = 2, max = 100)
-        private String content;
-    }
+    record ModifyForm (
+            @NotBlank
+            @Size(min = 2, max = 100)
+            String content
+    ){}
 
     @GetMapping("/posts/{postId}/comments/{id}/modify")
     @Transactional(readOnly = true)
@@ -85,7 +79,7 @@ public class PostCommentController {
         Post post = postService.findById(postId).get();
         PostComment postComment = post.findCommentById(id).get();
 
-        postService.modifyComment(postComment, modifyForm.getContent());
+        postService.modifyComment(postComment, modifyForm.content);
 
         return "redirect:/posts/" + postId;
     }
