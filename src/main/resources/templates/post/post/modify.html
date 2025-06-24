@@ -1,0 +1,17 @@
+<form method="POST" th:object="${form}">
+    <div th:replace="~{form_errors :: formErrorsFragment}"></div>
+
+    <div>
+        <label for="title">제목</label><br>
+        <input type="text" placeholder="제목" autofocus th:field="*{title}"><br>
+    </div>
+    <div>
+        <label for="content">내용</label><br>
+        <textarea placeholder="내용" th:field="*{content}"></textarea><br>
+    </div>
+    <button type="submit">수정</button>
+</form>
+
+<div>
+    <a href=".">글 목록</a>
+</div>
