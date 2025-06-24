@@ -22,6 +22,11 @@ import java.util.List;
 public class PostController {
     private final PostService postService;
 
+    @ModelAttribute("siteName")
+    public String siteName() {
+        return "커뮤니티 사이트 A";
+    }
+
     @Getter
     @AllArgsConstructor
     public static class WriteForm {
@@ -41,7 +46,7 @@ public class PostController {
 
     @PostMapping("/posts/write")
     @Transactional
-    public String doWrite(@ModelAttribute("form") @Valid WriteForm form, BindingResult bindingResult) {
+    public String write(@ModelAttribute("form") @Valid WriteForm form, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "post/post/write";
         }
