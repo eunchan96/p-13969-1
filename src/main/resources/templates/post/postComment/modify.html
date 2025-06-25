@@ -1,4 +1,9 @@
 <html layout:decorate="~{layout}">
+
+<head>
+    <title th:text="|댓글 수정 - ${postComment.content}|"></title>
+</head>
+
 <div layout:fragment="content">
     <script>
         function PostComment__submitModifyForm(form) {

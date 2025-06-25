@@ -1,4 +1,9 @@
 <html layout:decorate="~{layout}">
+
+<head>
+    <title th:text="|글 수정 - ${post.title}|"></title>
+</head>
+
 <div layout:fragment="content">
     <h1 th:text="${siteName}"></h1>
 
@@ -18,6 +23,6 @@
     </form>
 
     <div>
-        <a href=".">글 목록</a>
+        <a href="/posts">글 목록</a>
     </div>
 </div>
