@@ -86,7 +86,7 @@ public class PostController {
 
     @GetMapping("/posts/{id}/modify")
     @Transactional(readOnly = true)
-    public String showModify(@PathVariable int id, @ModelAttribute("form") ModifyForm form, Model model) {
+    public String showModify(@PathVariable int id, Model model) {
         Post post = postService.findById(id).get();
 
         model.addAttribute("post", post);
